@@ -7,9 +7,9 @@ function Select({setAidMode}){
             </div>
             <select className="custom-select" id="inputGroupSelect01" onChange={e=>setAidMode(e.target.selectedIndex)}>
                 <option>Choose...</option>
-                <option defaultValue="1">無</option>
-                <option defaultValue="2">wiki連結132</option>
-                <option defaultValue="3">延伸論文連結</option>
+                <option defaultValue="1">英文版wiki連結</option>
+                <option defaultValue="2">中文版wiki連結</option>
+                <option defaultValue="3">pubmed延伸論文連結</option>
             </select>
         </div>
     )
