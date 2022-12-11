@@ -7,15 +7,17 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/')
 def index():
     return 'hello!!'
 
-@app.route('/predict', methods=['POST'])
 
+@app.route('/predict', methods=['POST'])
 def postInput():
     # 取前端傳來的數值
+    return
 
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port = 3000, debug = True)
+    app.run(host='0.0.0.0', port=3000, debug=True)
