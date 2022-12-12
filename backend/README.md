@@ -3,7 +3,7 @@
 ## Environment
 
 ```
-conda env create -f env_demo.yml
+conda env create -f environment.yml
 ```
 
 ## Before running
