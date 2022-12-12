@@ -113,7 +113,8 @@ analyses RL was cm holsec in group a in group b and in group c trapping v')
         do{
            try{range.setEnd(node,range.endOffset + 1)}catch(e){break}
         }while(range.toString().indexOf(' ') == -1 && range.toString().trim() != '')
-        setPosition(range.startOffset)
+        setPosition(targetText.slice(0,range.endOffset).split(' ').length-2)
+        //console.log(targetText.slice[range.startOffset].length)
         setSelectedWord(range.toString().trim())
     }
 
@@ -127,18 +128,19 @@ analyses RL was cm holsec in group a in group b and in group c trapping v')
                         組員：彭鈺峯、林聖硯、謝一陽、鄧立珏、李承祐、杜冠勳<br></br>
                         指導老師：林忠緯、陳縕儂
                     </h5>
-                    <b>
+                    <br></br>
+                    <h5>
                         {(mode!='entering')?<>在左邊輸入想要分析的文章後，按下下一步✅</>:<>在左邊輸入想要分析的文章後，按下下一步</>}
                         <br></br>
                         {(mode!=='answering')?<>點取你想要分析的縮寫，並按下確認</>:<>點取你想要分析的縮寫，並按下確認✅</>}
-                    </b>
+                    </h5>
                 </div>
             </div>
             {(mode!='entering')?
             <>
                 <div className="left">
                     <Select setAidMode={setAidMode}></Select>
-                    <h3>你選擇了{selectedWord}位於第{position}字元<br></br></h3>
+                    <h3>你選擇了{selectedWord}位於第{position}個字<br></br></h3>
                     <div className='overlap'>
                         <div onClick={e=>findPosition(e)}>{targetText}</div>
                         <div className='unclickable'>{highlight(targetText)}</div>
