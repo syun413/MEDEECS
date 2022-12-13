@@ -1,11 +1,10 @@
 html,body{
   background-color: rgba(255, 255, 255, 0.744);
   display: flex;
-  align-items: center;
 }
 .container{
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
   justify-content: center;
   flex-wrap: wrap;
   width: 90%;
@@ -15,20 +14,37 @@ html,body{
 }
 .top{
   width: 100%;
-  height: 50px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.flexbox{
   text-align: center;
 }
 .left{
   width: 40%;
 }
+.overlap{
+  position: relative;
+}
+.unclickable{
+  position: absolute;
+  left:0px;
+  bottom: 0px;
+  pointer-events: none;
+  z-index: 0;
+}
 .middle{
-  height: 100%;
+  height: 50px;
   width: 5%;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .right{
-  display: flex;
   width: 40%;
-  padding: 1px;
-  border: 1px solid black;
+  height: 300px;
+  text-align: center;
 }

@@ -4,8 +4,9 @@ const instance = axios.create({
 })  
 
 export default{
-    getAnswer:(targetText)=>{
-        //const payload=instance.get('/getAnswer',{params:{mode:aidMode,target:targetText}})
+    getAnswer:(targetText,position)=>{
+        //const payload=instance.get('/getAnswer',{params:{position:position,target:targetText}})
+        //return payload
         const fakeReturn=["free oxygen radicals",0.9,"functional residual capacity",0.1]
         return fakeReturn
     }
