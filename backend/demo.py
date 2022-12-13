@@ -16,25 +16,13 @@ device = torch.device("cuda" if use_gpu else "cpu")
 def parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument(
-        "--data_dir",
-        type=Path,
-        help="Directory to the training dataset.",
-        default="./data",
-    )
-    parser.add_argument(
         "--adam_path",
         type=Path,
         help="Directory to save the model file.",
         default="./cache/valid_adam.txt",
     )
 
-    # model
-    parser.add_argument("--model_name", type=str, choices=['electra', 'lstm', 'lstm_sa'], default='electra')
     parser.add_argument("--model_ckpt", type=Path, default='./models/electra_pretrained.pt')
-
-    # data loader
-    parser.add_argument("--batch_size", type=int, default=1)
-    parser.add_argument("--num_workers", type=int, default=8)
 
     args = parser.parse_args()
     return args
@@ -43,34 +31,19 @@ def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 def main(args):
-    test_data_path = args.data_dir / 'test.csv'
-    test = pd.read_csv(test_data_path)
+
     adam_df = pd.read_csv(args.adam_path, sep='\t')
 
     unique_labels = adam_df.EXPANSION.unique()
     label2idx = {label: ix for ix, label in enumerate(unique_labels)}
     idx2label = dict((v,k) for k,v in label2idx.items())
-    
-    if args.model_name == 'electra':
-        model = Electra()
-        #model = torch.hub.load("McGill-NLP/medal", "electra")
-    elif args.model_name == 'lstm':
-        model = torch.hub.load("McGill-NLP/medal", "lstm")
-    elif args.model_name == 'lstm_sa':
-        model = torch.hub.load("McGill-NLP/medal", "lstm_sa")
+
+    model = Electra()
 
     ckpt = torch.load(args.model_ckpt)
     model.load_state_dict(ckpt)
 
-    test['LABEL_NUM'] = test.LABEL.apply(lambda l: label2idx[l])
     tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')
-
-    test_data = HuggingfaceDataset(test, tokenizer=tokenizer, device=device)
-    test_dl = torch.utils.data.DataLoader(
-            range(len(test_data)), 
-            shuffle=False, 
-            batch_size=args.batch_size
-        )
     
     model = model.to(device)
     model.eval()
