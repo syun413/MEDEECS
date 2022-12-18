@@ -1,8 +1,9 @@
 const express = require('express')
 const { spawn } = require('child_process')
 const app = express()
-
-app.get('/getAnswer', (req, res) => {
+var cors = require('cors')
+app.use(cors())
+app.get('/api/getAnswer', (req, res) => {
     const { position, targetText } = req.query
     const pythonProcess = spawn('python', ['demo.py'])
     pythonProcess.stdin.write(JSON.stringify({ position, targetText }))
@@ -14,7 +15,7 @@ app.get('/getAnswer', (req, res) => {
         res.send({ answer: result })
     })
 })
-
-app.listen(4000, () => {
+const port=process.env.PORT ||4000
+app.listen(port, () => {
     console.log('Express server listening on port 4000')
 })

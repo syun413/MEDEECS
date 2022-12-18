@@ -10,6 +10,8 @@ from transformers import ElectraTokenizer
 from models.tokenizer_and_dataset import HuggingfaceDataset
 from models.electra import Electra
 
+import sys
+
 use_gpu = torch.cuda.is_available()
 device = torch.device("cuda" if use_gpu else "cpu")
 
@@ -52,6 +54,8 @@ def main(args):
 
     input_text = ['This is a demo text AB']
     loc = 5
+    #input_text = sys.argv[1]
+    #loc = sys.argv[0]
     word = input_text[0].split(' ')[loc]
     sents_idx = tokenizer.batch_encode_plus(
                 input_text, max_length=512, 
