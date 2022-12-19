@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Select from './components/select'
 import React, { useEffect, useState } from 'react';
-import api from './api'
+import getAnswer from './getAnswer'
 import {Table,Button} from 'antd'
 import axios from 'axios'
 
@@ -22,7 +22,8 @@ analyses RL was cm holsec in group a in group b and in group c trapping v')
     const [aid,setAid]=useState('')
 
     const sendRequest=async()=>{
-        const temp=await api.getAnswer(targetText,position)
+        const temp=await getAnswer(targetText,position)
+        console.log("request",temp)
         var tempDic=[]
         for (var i=0;i<temp.length/2;i++){
             tempDic.push(

@@ -17,6 +17,10 @@ device = torch.device("cuda" if use_gpu else "cpu")
 
 def parse_args() -> Namespace:
     parser = ArgumentParser()
+    parser.add_argument("targetText", type=ascii,
+                    help="display a square of a given number")
+    parser.add_argument("position", type=int,
+                    help="display a square of a given number")
     parser.add_argument(
         "--adam_path",
         type=Path,
@@ -33,7 +37,6 @@ def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 def main(args):
-
     adam_df = pd.read_csv(args.adam_path, sep='\t')
 
     unique_labels = adam_df.EXPANSION.unique()
@@ -52,10 +55,10 @@ def main(args):
 
     softmax = torch.nn.Softmax()
 
-    input_text = ['This is a demo text AB']
-    loc = 5
-    #input_text = sys.argv[1]
-    #loc = sys.argv[0]
+    #input_text = ['This is a demo text AB']
+    #loc = 5
+    input_text = [args.targetText]
+    loc = args.position
     word = input_text[0].split(' ')[loc]
     sents_idx = tokenizer.batch_encode_plus(
                 input_text, max_length=512, 
