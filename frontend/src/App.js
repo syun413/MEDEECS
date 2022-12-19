@@ -5,16 +5,17 @@ import React, { useEffect, useState } from 'react';
 import getAnswer from './getAnswer'
 import {Table,Button} from 'antd'
 import axios from 'axios'
+import api from './api'
 
 function App() {
     const [mode,setMode]=useState('entering')
     const [targetText,setTargetTest]=useState(
-        'we developed an animal model of chronic allergic airway disease by repeatedly exposing\
+        "we developed an animal model of chronic allergic airway disease by repeatedly exposing\
 nine sheep to tracheal instillation of ascaris antigen until stable increase in RL at \
 three times control in six reactive sheep group c was obtained they were then compared \
 to the three nonreactive sheep group b and a control group of eight sheep exposed to \
 saline only group a in terms of pulmonary CF tests and bronchoalveolar lavage bal \
-analyses RL was cm holsec in group a in group b and in group c trapping v')
+analyses RL was cm holsec in group a in group b and in group c trapping v")
     const [position,setPosition]=useState(-1)
     const [selectedWord,setSelectedWord]=useState('_')
     const [answer,setAnswer]=useState([])
@@ -22,14 +23,14 @@ analyses RL was cm holsec in group a in group b and in group c trapping v')
     const [aid,setAid]=useState('')
 
     const sendRequest=async()=>{
-        const temp=await getAnswer(targetText,position)
-        console.log("request",temp)
+        const temp=await api.getAnswer(targetText,position)
+        console.log(temp)
         var tempDic=[]
-        for (var i=0;i<temp.length/2;i++){
+        for (var i=0;i<5;i++){
             tempDic.push(
                 {key: i,
-                outcome: <Button onClick={e=>displayAid(e.target.textContent)}>{temp[2*i]}</Button>,
-                possibility: temp[2*i+1],})
+                outcome: <Button onClick={e=>displayAid(e.target.textContent)}>{temp[i].split(',')[0]}</Button>,
+                possibility: temp[i].split(',')[1],})
         }
         setAnswer(tempDic)
         setMode('answering')
@@ -114,8 +115,14 @@ analyses RL was cm holsec in group a in group b and in group c trapping v')
         do{
            try{range.setEnd(node,range.endOffset + 1)}catch(e){break}
         }while(range.toString().indexOf(' ') == -1 && range.toString().trim() != '')
+        //if(targetText.split(' ')[-1])
         setPosition(targetText.slice(0,range.endOffset).split(' ').length-2)
         //console.log(targetText.slice[range.startOffset].length)
+        var temp=targetText.slice(0,range.endOffset).split(' ')
+        if(temp.slice(-1)[0]==="")
+            setPosition(temp.length-2)
+        else
+            setPosition(temp.length-1)
         setSelectedWord(range.toString().trim())
     }
 

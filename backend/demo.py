@@ -75,9 +75,9 @@ def main(args):
         pred_words.append(idx2label[pred_idx])
         pred_probs.append(pred_value)
 
-    print(f"Top 5 preidction of abbreviation: {word}")
+    #print(f"Top 5 preidction of abbreviation: {word}")
     for i in range(len(pred_words)):
-        print(pred_words[i], pred_probs[i]) 
+        print(pred_words[i],",", pred_probs[i]) 
 
 
     # for data_idx in test_dl:
